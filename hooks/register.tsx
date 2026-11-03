@@ -15,7 +15,7 @@ import { boxLook, fitPixels, inkOn, over, paint, type PixelLook, png, readable, 
 import { CELL_PROBE, colorOf, GHOSTTY_ARGS, parseGhostty, type TermColors } from './term'
 import type { ZoneProps } from './zone'
 import type { HitProps } from './hit'
-import { activityIcon, barSvg, selectionOn, DESK, DESK_GIT, GAP_PX, iconSvg, type IconName, ink, lighten, nodeIcon, ROW_PX, rowSvg, STEP_PX, toolSvg } from './svg'
+import { activityIcon, barSvg, selectionOn, DESK, DESK_GIT, deskTheme, GAP_PX, iconSvg, type IconName, ink, lighten, nodeIcon, ROW_PX, rowSvg, STEP_PX, toolSvg } from './svg'
 import { ADD_COLOR, DEL_COLOR, type Palette, parsePalette } from './palette'
 import { BRAIN, CHEVRON_CLOSED, CHEVRON_OPEN, fileIcon, GIT_COLOR, GUARD, isMemory } from './icons'
 import { allGuards, GUARD_TOOLS, guardIn, guardOver, type Guards, outsideOf, parseGuards, toggled } from './guard'
@@ -2594,6 +2594,7 @@ function shortPath(path: string): string {
 
 export const register: Register = (on, options) => {
   glyphSetting = typeof options?.glyphs === 'string' ? options.glyphs : 'auto'
+  deskTheme(options?.desktopTheme === 'light')
   const activity = typeof options?.activity === 'string' ? options.activity : 'reads and writes'
   showReads = activity.includes('reads')
   showWrites = activity.includes('writes')

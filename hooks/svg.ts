@@ -161,7 +161,22 @@ export const DESK = {
   toolOn: '#2c3442',
   addBg: '#1d3324',
   delBg: '#3b2226',
-} as const
+}
+
+export const DESK_LIGHT: typeof DESK = {
+  accent: '#2f6fd6',
+  muted: '#6e6e76',
+  guide: '#dcdce0',
+  fg: '#2b2b2f',
+  urgent: '#c62828',
+  selection: '#d6e3f8',
+  hover: '#eeeff2',
+  field: '#ededf0',
+  edge: '#d4d4d8',
+  toolOn: '#dbe6f8',
+  addBg: '#dcf3e1',
+  delBg: '#fbe0e0',
+}
 
 const ANSI: Record<number, string> = {
   1: '#ef5350',
@@ -173,6 +188,16 @@ const ANSI: Record<number, string> = {
   8: '#85858c',
 }
 
+const ANSI_LIGHT: typeof ANSI = {
+  1: '#c62828',
+  2: '#1f883d',
+  3: '#9a6700',
+  4: '#2f6fd6',
+  5: '#8250df',
+  6: '#1b7c83',
+  8: '#6e6e76',
+}
+
 export const DESK_GIT: Record<string, string> = {
   A: '#3fb950',
   '?': '#3fb950',
@@ -180,6 +205,23 @@ export const DESK_GIT: Record<string, string> = {
   C: '#4b8ef0',
   M: '#d99a1e',
   T: '#d99a1e',
+}
+
+export const DESK_GIT_LIGHT: typeof DESK_GIT = {
+  A: '#1f883d',
+  '?': '#1f883d',
+  R: '#2f6fd6',
+  C: '#2f6fd6',
+  M: '#9a6700',
+  T: '#9a6700',
+}
+
+const DARK = { desk: { ...DESK }, ansi: { ...ANSI }, git: { ...DESK_GIT } }
+
+export function deskTheme(light: boolean): void {
+  Object.assign(DESK, light ? DESK_LIGHT : DARK.desk)
+  Object.assign(ANSI, light ? ANSI_LIGHT : DARK.ansi)
+  Object.assign(DESK_GIT, light ? DESK_GIT_LIGHT : DARK.git)
 }
 
 export function lighten(color: string, by = 0.3): string {

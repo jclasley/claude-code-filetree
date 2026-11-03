@@ -1,6 +1,6 @@
 {
   "name": "filetree",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "An IDE-style file tree for Claude Code that shows what Claude is doing and where in files",
   "types": "./types/index.d.ts",
   "author": {
@@ -24,6 +24,16 @@
         "writes",
         "reads",
         "none"
+      ]
+    },
+    "desktopTheme": {
+      "type": "string",
+      "title": "Desktop theme",
+      "description": "Palette for the Desktop app, which does not tell plugins its appearance: dark or light; set it to match the app",
+      "default": "dark",
+      "options": [
+        "dark",
+        "light"
       ]
     },
     "glyphs": {

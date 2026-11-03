@@ -3,7 +3,7 @@ import { GIT_COLOR } from '../hooks/icons'
 import { ADD_COLOR, DEL_COLOR } from '../hooks/palette'
 import { DEFAULT_THEME } from '../hooks/tree'
 import { boxLook, ratio, rgbOf } from '../hooks/pixmap'
-import { DESK, DESK_GIT, selectionOn } from '../hooks/svg'
+import { DESK, DESK_GIT, DESK_GIT_LIGHT, DESK_LIGHT, selectionOn } from '../hooks/svg'
 
 type Check = { name: string; color: string; min: number }
 
@@ -54,6 +54,14 @@ const suites = [
     checks: [
       ...(['accent', 'muted', 'fg', 'urgent'] as const).map(k => ({ name: `desk ${k}`, color: DESK[k], min: TEXT })),
       ...Object.entries(DESK_GIT).map(([k, color]) => ({ name: `desk git ${k}`, color, min: TEXT })),
+    ],
+  },
+  {
+    name: 'desktop light',
+    backgrounds: { ...LIGHT_BACKGROUNDS, selection: DESK_LIGHT.selection, hover: DESK_LIGHT.hover, field: DESK_LIGHT.field },
+    checks: [
+      ...(['accent', 'muted', 'fg', 'urgent'] as const).map(k => ({ name: `desk ${k}`, color: DESK_LIGHT[k], min: TEXT })),
+      ...Object.entries(DESK_GIT_LIGHT).map(([k, color]) => ({ name: `desk git ${k}`, color, min: TEXT })),
     ],
   },
 ]
@@ -116,11 +124,12 @@ for (const [name, bg] of Object.entries(DARK_BACKGROUNDS)) {
   console.log(`${ok ? 'ok  ' : 'FAIL'} ${name.padEnd(16)} desktop ${DESK.selection} ${desk.toFixed(2)}:1, terminal ${tui} ${term.toFixed(2)}:1`)
 }
 for (const [name, bg] of Object.entries(LIGHT_BACKGROUNDS)) {
+  const desk = contrast(DESK_LIGHT.selection, bg)
   const tui = selectionOn('ansi256(0)', bg, true)
   const term = contrast(tui, bg)
-  const ok = term >= 1.3
+  const ok = desk >= 1.2 && term >= 1.3
   if (!ok) failed++
-  console.log(`${ok ? 'ok  ' : 'FAIL'} ${name.padEnd(16)} terminal ${tui} ${term.toFixed(2)}:1`)
+  console.log(`${ok ? 'ok  ' : 'FAIL'} ${name.padEnd(16)} desktop ${DESK_LIGHT.selection} ${desk.toFixed(2)}:1, terminal ${tui} ${term.toFixed(2)}:1`)
 }
 console.log(failed ? `\n${failed} color${failed === 1 ? '' : 's'} below the contrast gate` : '\nevery color passes')
 process.exit(failed ? 1 : 0)
